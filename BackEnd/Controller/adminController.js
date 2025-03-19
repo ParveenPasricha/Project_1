@@ -17,11 +17,42 @@ const createAdmin = async (req, res)=>{
 }
 const getAdmin = async (req, res) => {
     try {
-        const admins = await adminModel.find();  // Fetch all data from the database
+        const admins = await adminModel.find();
         res.status(200).json(admins);
     } catch (error) {
         console.log("Error fetching admin data", error);
         res.status(500).json({ msg: "Error fetching data" });
     }
 };
-module.exports = {createAdmin, getAdmin}
+const updateAdmin = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedAdmin = await adminModel.findByIdAndUpdate(id, req.body, { new: true });
+
+        if (!updatedAdmin) {
+            return res.status(404).json({ msg: "Admin record not found" });
+        }
+
+        res.status(200).json({ msg: "Admin updated successfully", updatedAdmin });
+    } catch (error) {
+        console.log("Error updating admin", error);
+        res.status(500).json({ msg: "Update failed", error });
+    }
+};
+const deleteAdmin = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedAdmin = await adminModel.findByIdAndDelete(id);
+
+        if (!deletedAdmin) {
+            return res.status(404).json({ msg: "Admin record not found" });
+        }
+
+        res.status(200).json({ msg: "Admin deleted successfully" });
+    } catch (error) {
+        console.log("Error deleting admin", error);
+        res.status(500).json({ msg: "Delete failed", error });
+    }
+};
+
+module.exports = {createAdmin, getAdmin, updateAdmin, deleteAdmin}

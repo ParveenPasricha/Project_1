@@ -1,8 +1,11 @@
-const express = require('express')
-const { createAdmin, getAdmin } = require('../Controller/adminController')
+const express = require("express");
+const { createAdmin, getAdmin, updateAdmin, deleteAdmin } = require("../Controller/adminController");
+const router = express.Router();
 
-const router = express.Router()
-router.post("/", createAdmin)
-router.get('/get', getAdmin)
+router.post("/addpost", createAdmin);
+router.get("/course", getAdmin);
+router.put("/update/:id", updateAdmin);
+router.delete("/delete/:id", deleteAdmin);
 
-module.exports= router
+
+module.exports = router;
