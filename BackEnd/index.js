@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const userRoutes = require("./Routes/userRoutes");
 const adminRoutes = require("./Routes/adminRoutes");
+const adminloginRoutes = require("./Routes/adminloginRoutes")
 
 dotenv.config();
 const PORT = process.env.PORT || 8080;
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use("/api", userRoutes);
 app.use("/admin", adminRoutes);
+app.use("/admin/panel", adminloginRoutes)
 
 mongoose
   .connect(MONGO_URL)
